@@ -1,6 +1,8 @@
 #ifndef _GLOO_RENDERBUFFER_H_
 #define _GLOO_RENDERBUFFER_H_
 
+#pragma once
+
 #include "gloo/Texture.h"
 
 #include <glad/glad.h>
@@ -18,7 +20,10 @@ namespace gloo
 
     public:
         Renderbuffer();
-        ~Renderbuffer() = default;
+        ~Renderbuffer()
+        {
+            Delete();
+        }
         /**
          * Cast to GLuint.
          * Lets you use the objects of Renderbuffer class in regular opengl calls .

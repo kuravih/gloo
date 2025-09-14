@@ -1,6 +1,8 @@
 #ifndef _GLOO_ELEMENTBUFFEROBJECT_H_
 #define _GLOO_ELEMENTBUFFEROBJECT_H_
 
+#pragma once
+
 #include <glad/glad.h>
 #include <vector>
 
@@ -18,7 +20,10 @@ namespace gloo
     public:
         ElementBufferObject() = default;
         ElementBufferObject(const std::vector<GLuint> &_indices);
-        ~ElementBufferObject() = default;
+        ~ElementBufferObject()
+        {
+            Delete();
+        };
         /**
          * Cast to GLuint.
          * Lets you use the objects of ElementBufferObject class in regular opengl calls.

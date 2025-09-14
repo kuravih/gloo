@@ -1,6 +1,8 @@
 #ifndef _GLOO_TEXTURE_H_
 #define _GLOO_TEXTURE_H_
 
+#pragma once
+
 #include <glad/glad.h>
 
 namespace gloo
@@ -203,7 +205,10 @@ namespace gloo
         Texture() = default;
         Texture(const void *_data, int _width, int _height, Type _type, InternalFormat _internalFormat, Format _format, Slot _slot, Target _target);
         Texture(int _width, int _height, Type _type, InternalFormat _internalFormat, Format _format, Slot _slot, Target _target);
-        ~Texture() = default;
+        ~Texture()
+        {
+            Delete();
+        }
         /**
          * Cast to GLuint.
          * Lets you use the objects of Shader class in regular opengl calls.

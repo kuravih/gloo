@@ -1,6 +1,8 @@
 #ifndef _GLOO_MESH_H_
 #define _GLOO_MESH_H_
 
+#pragma once
+
 #include "gloo/VertexArrayObject.h"
 #include "gloo/VertexBufferObject.h"
 #include "gloo/ElementBufferObject.h"
@@ -23,7 +25,10 @@ namespace gloo
         Mesh() = default;
         Mesh(const std::vector<Vertex> &_vertices, const std::vector<GLuint> &_indices);
         Mesh(const std::vector<GLuint> &_indices); // TODO: a mesh can be rendered only with indices;
-        ~Mesh() = default;
+        ~Mesh()
+        {
+            Delete();
+        }
         void LinkAttribute(GLuint _layout, GLint _numComponents, VertexArrayObject::Type _type, GLsizei _stride, const void *_offset);
         void LinkPositionToLocation(GLuint _layout);
         void LinkColorToLocation(GLuint _layout);

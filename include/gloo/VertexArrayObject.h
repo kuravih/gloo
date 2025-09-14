@@ -1,6 +1,8 @@
 #ifndef _GLOO_VERTEXARRAYOBJECT_H_
 #define _GLOO_VERTEXARRAYOBJECT_H_
 
+#pragma once
+
 #include "gloo/VertexBufferObject.h"
 
 #include <glad/glad.h>
@@ -37,7 +39,10 @@ namespace gloo
 
     public:
         VertexArrayObject();
-        ~VertexArrayObject() = default;
+        ~VertexArrayObject()
+        {
+            Delete();
+        }
         /**
          * Cast to GLuint.
          * Lets you use the objects of VertexArrayObject class in regular opengl calls.

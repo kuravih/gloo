@@ -1,6 +1,8 @@
 #ifndef _GLOO_VERTEXBUFFEROBJECT_H_
 #define _GLOO_VERTEXBUFFEROBJECT_H_
 
+#pragma once
+
 #include <glad/glad.h>
 #include <glm/glm.hpp>
 #include <vector>
@@ -27,7 +29,10 @@ namespace gloo
     public:
         VertexBufferObject() = default;
         VertexBufferObject(const std::vector<Vertex> &_vertices);
-        ~VertexBufferObject() = default;
+        ~VertexBufferObject()
+        {
+            Delete();
+        }
         /**
          * Cast to GLuint.
          * Lets you use the objects of VertexBufferObject class in regular opengl calls.

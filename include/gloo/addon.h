@@ -1,6 +1,8 @@
 #ifndef _GLOO_ADDON_H_
 #define _GLOO_ADDON_H_
 
+#pragma once
+
 #include "gloo/Texture.h"
 
 #include <string>

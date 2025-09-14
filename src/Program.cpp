@@ -69,7 +69,7 @@ void gloo::Program::Delete()
 /**
  * Link GLuint to shader program uniform.
  **/
-void gloo::Program::Uniform(const char *_uniform, GLuint _unit)
+void gloo::Program::Uniform(const char *_uniform, const GLuint _unit)
 {
     Activate();
     glUniform1i(glGetUniformLocation(id, _uniform), _unit);
@@ -78,7 +78,7 @@ void gloo::Program::Uniform(const char *_uniform, GLuint _unit)
 /**
  * Link Texture to shader program uniform.
  **/
-void gloo::Program::Uniform(const char *_uniform, gloo::Texture &_texture)
+void gloo::Program::Uniform(const char *_uniform, const gloo::Texture &_texture)
 {
     Activate();
     glUniform1i(glGetUniformLocation(id, _uniform), (GLenum)((int)_texture.slot - (int)gloo::Texture::Slot::slot00));
@@ -87,7 +87,7 @@ void gloo::Program::Uniform(const char *_uniform, gloo::Texture &_texture)
 /**
  * Link 4x4 Matrix to shader program uniform.
  **/
-void gloo::Program::Uniform(const char *_uniform, glm::mat4 &_mat4)
+void gloo::Program::Uniform(const char *_uniform, const glm::mat4 &_mat4)
 {
     Activate();
     glUniformMatrix4fv(glGetUniformLocation(id, _uniform), 1, GL_FALSE, glm::value_ptr(_mat4));
@@ -96,7 +96,7 @@ void gloo::Program::Uniform(const char *_uniform, glm::mat4 &_mat4)
 /**
  * Link 4 element Vector to shader program uniform.
  **/
-void gloo::Program::Uniform(const char *_uniform, glm::vec4 &_vec4)
+void gloo::Program::Uniform(const char *_uniform, const glm::vec4 &_vec4)
 {
     Activate();
     glUniform4f(glGetUniformLocation(id, _uniform), _vec4.x, _vec4.y, _vec4.z, _vec4.w);
@@ -105,7 +105,7 @@ void gloo::Program::Uniform(const char *_uniform, glm::vec4 &_vec4)
 /**
  * Link 3 element Vector to shader program uniform.
  **/
-void gloo::Program::Uniform(const char *_uniform, glm::vec3 &_vec3)
+void gloo::Program::Uniform(const char *_uniform, const glm::vec3 &_vec3)
 {
     Activate();
     glUniform3f(glGetUniformLocation(id, _uniform), _vec3.x, _vec3.y, _vec3.z);
@@ -114,7 +114,7 @@ void gloo::Program::Uniform(const char *_uniform, glm::vec3 &_vec3)
 /**
  * Link 2 element Vector to shader program uniform.
  **/
-void gloo::Program::Uniform(const char *_uniform, glm::vec2 &_vec2)
+void gloo::Program::Uniform(const char *_uniform, const glm::vec2 &_vec2)
 {
     Activate();
     glUniform2f(glGetUniformLocation(id, _uniform), _vec2.x, _vec2.y);
@@ -123,7 +123,7 @@ void gloo::Program::Uniform(const char *_uniform, glm::vec2 &_vec2)
 /**
  * Link float to shader program uniform.
  **/
-void gloo::Program::Uniform(const char *_uniform, float _float)
+void gloo::Program::Uniform(const char *_uniform, const float _float)
 {
     Activate();
     glUniform1f(glGetUniformLocation(id, _uniform), _float);
@@ -132,7 +132,7 @@ void gloo::Program::Uniform(const char *_uniform, float _float)
 /**
  * Link float to shader program uniform.
  **/
-void gloo::Program::Uniform(const char *_uniform, int _int)
+void gloo::Program::Uniform(const char *_uniform, const int _int)
 {
     Activate();
     glUniform1i(glGetUniformLocation(id, _uniform), _int);

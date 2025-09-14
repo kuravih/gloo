@@ -1,6 +1,8 @@
 #ifndef _GLOO_SHADER_H_
 #define _GLOO_SHADER_H_
 
+#pragma once
+
 #include <glad/glad.h>
 #include <string>
 #include <fstream>
@@ -49,7 +51,10 @@ namespace gloo
         Shader() = default;
         Shader(Type _type);
         Shader(const std::string &_code, Type _type);
-        ~Shader() = default;
+        ~Shader()
+        {
+            Delete();
+        }
         /**
          * Cast to GLuint.
          * Lets you use the objects of Shader class in regular opengl calls.

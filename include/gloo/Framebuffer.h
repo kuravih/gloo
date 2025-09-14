@@ -1,6 +1,8 @@
 #ifndef _GLOO_FRAMEBUFFER_H_
 #define _GLOO_FRAMEBUFFER_H_
 
+#pragma once
+
 #include <glad/glad.h>
 
 namespace gloo
@@ -16,7 +18,10 @@ namespace gloo
 
     public:
         Framebuffer();
-        ~Framebuffer() = default;
+        ~Framebuffer()
+        {
+            Delete();
+        }
         /**
          * Cast to GLuint.
          * Lets you use the objects of Framebuffer class in regular opengl calls.
