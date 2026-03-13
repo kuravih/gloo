@@ -32,23 +32,23 @@ void gloo::Mesh::LinkPositionToLocation(GLuint _layout)
 }
 
 /**
- * Link mesh color attribute to the shader.
- * \param _layout layout of the shader this attribute is linking to.
- * \param _numComponents number of components of this attribute.
- * \param _type type of the attribute.
- **/
-void gloo::Mesh::LinkColorToLocation(GLuint _layout)
-{
-    LinkAttribute(_layout, 3, gloo::VertexArrayObject::Type::Float, sizeof(gloo::Vertex), (void *)(sizeof(glm::vec3)));
-}
-
-/**
  * Link mesh normal attribute to the shader.
  * \param _layout layout of the shader this attribute is linking to.
  * \param _numComponents number of components of this attribute.
  * \param _type type of the attribute.
  **/
 void gloo::Mesh::LinkNormalToLocation(GLuint _layout)
+{
+    LinkAttribute(_layout, 3, gloo::VertexArrayObject::Type::Float, sizeof(gloo::Vertex), (void *)(sizeof(glm::vec3)));
+}
+
+/**
+ * Link mesh color attribute to the shader.
+ * \param _layout layout of the shader this attribute is linking to.
+ * \param _numComponents number of components of this attribute.
+ * \param _type type of the attribute.
+ **/
+void gloo::Mesh::LinkColorToLocation(GLuint _layout)
 {
     LinkAttribute(_layout, 3, gloo::VertexArrayObject::Type::Float, sizeof(gloo::Vertex), (void *)(sizeof(glm::vec3) + sizeof(glm::vec3)));
 }
