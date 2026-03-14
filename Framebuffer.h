@@ -17,11 +17,21 @@ namespace gloo
         GLuint id;
 
     public:
-        Framebuffer();
+        /**
+         * Generate a Framebuffer.
+         * Binds the created Framebuffer as a result.
+         **/
+        Framebuffer()
+        {
+            glGenFramebuffers(1, &id);
+            Bind();
+        }
+
         ~Framebuffer()
         {
             Delete();
         }
+
         /**
          * Cast to GLuint.
          * Lets you use the objects of Framebuffer class in regular opengl calls.
@@ -30,14 +40,29 @@ namespace gloo
         {
             return id;
         }
-        void Delete();
-        void Bind();
+
+        /**
+         * Bind the Framebuffer.
+         **/
+        void Bind()
+        {
+            glBindFramebuffer(GL_FRAMEBUFFER, id);
+        }
+
         /**
          * Unbind the Framebuffer.
          **/
         static void UNBIND()
         {
             glBindFramebuffer(GL_FRAMEBUFFER, 0);
+        }
+
+        /**
+         * Delete the Framebuffer.
+         **/
+        void Delete()
+        {
+            glDeleteFramebuffers(1, &id);
         }
     };
 

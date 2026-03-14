@@ -28,11 +28,24 @@ namespace gloo
 
     public:
         VertexBufferObject() = default;
-        VertexBufferObject(const std::vector<Vertex> &_vertices);
+
+        /**
+         * Create a VertexBufferObject.
+         * Binds the created VertexBufferObject as a result.
+         * \param _vertices The vertex array.
+         **/
+        VertexBufferObject(const std::vector<Vertex> &_vertices)
+        {
+            glGenBuffers(1, &id);
+            Bind();
+            glBufferData(GL_ARRAY_BUFFER, _vertices.size() * sizeof(Vertex), _vertices.data(), GL_STATIC_DRAW);
+        }
+
         ~VertexBufferObject()
         {
             Delete();
         }
+
         /**
          * Cast to GLuint.
          * Lets you use the objects of VertexBufferObject class in regular opengl calls.
@@ -41,15 +54,30 @@ namespace gloo
         {
             return id;
         }
-        void Bind();
+
+        /**
+         * Bind the VertexBufferObject.
+         **/
+        void Bind()
+        {
+            glBindBuffer(GL_ARRAY_BUFFER, id);
+        }
+
         /**
          * Unbind the VertexBufferObject.
          **/
-        void static UNBIND()
+        static void UNBIND()
         {
             glBindBuffer(GL_ARRAY_BUFFER, 0);
         }
-        void Delete();
+
+        /**
+         * Delete the VertexBufferObject.
+         **/
+        void Delete()
+        {
+            glDeleteBuffers(1, &id);
+        }
     };
 
 }

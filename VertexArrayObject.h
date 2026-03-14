@@ -38,11 +38,21 @@ namespace gloo
         GLuint id;
 
     public:
-        VertexArrayObject();
+        /**
+         * Create a VertexArrayObject.
+         * Binds the created VertexArrayObject as a result.
+         **/
+        VertexArrayObject()
+        {
+            glGenVertexArrays(1, &id);
+            Bind();
+        }
+
         ~VertexArrayObject()
         {
             Delete();
         }
+
         /**
          * Cast to GLuint.
          * Lets you use the objects of VertexArrayObject class in regular opengl calls.
@@ -51,8 +61,32 @@ namespace gloo
         {
             return id;
         }
-        void LinkAttribute(VertexBufferObject &_vertexBufferObject, GLuint _layout, GLint _numComponents, Type _type, GLsizei _stride, const void *_offset);
-        void Bind();
+
+        /**
+         * Link attribute to the VertexArrayObject.
+         * \param _vertexBufferObject VertexBufferObject.
+         * \param _layout layout of the shader this attribute is linking to.
+         * \param _numComponents number of components of this attribute.
+         * \param _type type of the attribute.
+         * \param _stride stride of the array.
+         * \param _offset offset on the array.
+         **/
+        void LinkAttribute(VertexBufferObject &_vertexBufferObject, GLuint _layout, GLint _numComponents, Type _type, GLsizei _stride, const void *_offset)
+        {
+            _vertexBufferObject.Bind();
+            glVertexAttribPointer(_layout, _numComponents, (GLenum)_type, GL_FALSE, _stride, _offset);
+            glEnableVertexAttribArray(_layout);
+            VertexBufferObject::UNBIND();
+        }
+
+        /**
+         * Bind the VertexArrayObject.
+         **/
+        void Bind()
+        {
+            glBindVertexArray(id);
+        }
+
         /**
          * Unbind the VertexArrayObject.
          **/
@@ -60,7 +94,14 @@ namespace gloo
         {
             glBindVertexArray(0);
         }
-        void Delete();
+
+        /**
+         * Delete the VertexArrayObject.
+         **/
+        void Delete()
+        {
+            glDeleteVertexArrays(1, &id);
+        }
     };
 
 }

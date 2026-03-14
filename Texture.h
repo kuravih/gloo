@@ -61,7 +61,6 @@ namespace gloo
             RG = GL_RG,
             RGB = GL_RGB,
             RGBA = GL_RGBA,
-            // --------------------------------------------------------------------------------------------------------------
             R8 = GL_R8,
             R8SNorm = GL_R8_SNORM,
             R16 = GL_R16,
@@ -123,7 +122,6 @@ namespace gloo
             RGBA16UI = GL_RGBA16UI,
             RGBA32I = GL_RGBA32I,
             RGBA32UI = GL_RGBA32UI,
-            // --------------------------------------------------------------------------------------------------------------
             Compressed_Red = GL_COMPRESSED_RED,
             Compressed_RG = GL_COMPRESSED_RG,
             Compressed_RGB = GL_COMPRESSED_RGB,
@@ -202,33 +200,104 @@ namespace gloo
         Slot slot;
         int width, height;
         float aspectRatio;
+
         Texture() = default;
-        Texture(const void *_data, int _width, int _height, Type _type, InternalFormat _internalFormat, Format _format, Slot _slot, Target _target);
-        Texture(int _width, int _height, Type _type, InternalFormat _internalFormat, Format _format, Slot _slot, Target _target);
+
+        /**
+         * Create a Texture with data.
+         **/
+        Texture(const void *_data, int _width, int _height, Type _type, InternalFormat _internalFormat, Format _format, Slot _slot, Target _target)
+            : id(0), target(_target), type(_type), internalFormat(_internalFormat), format(_format), slot(_slot), width(_width), height(_height), aspectRatio((float)_height / (float)_width)
+        {
+            glGenTextures(1, &id);
+            Activate();
+            Bind();
+
+            glTexParameteri((GLenum)target, GL_TEXTURE_MIN_FILTER, GL_NEAREST_MIPMAP_LINEAR);
+            glTexParameteri((GLenum)target, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+            glTexParameteri((GLenum)target, GL_TEXTURE_WRAP_S, GL_REPEAT);
+            glTexParameteri((GLenum)target, GL_TEXTURE_WRAP_T, GL_REPEAT);
+
+            Update(_data);
+        }
+
+        /**
+         * Create a Texture without data.
+         **/
+        Texture(int _width, int _height, Type _type, InternalFormat _internalFormat, Format _format, Slot _slot, Target _target)
+            : Texture(nullptr, _width, _height, _type, _internalFormat, _format, _slot, _target) {}
+
         ~Texture()
         {
             Delete();
         }
+
         /**
          * Cast to GLuint.
-         * Lets you use the objects of Shader class in regular opengl calls.
+         * Lets you use the objects of Texture class in regular opengl calls.
          **/
         operator GLuint() const
         {
             return id;
         }
-        void Bind();
-        void Unbind();
-        void Delete();
-        void Update(const void *_data);
-        void Update();
-        void Activate();
+
         /**
-         * Deactivate the Shader.
+         * Bind the Texture.
+         **/
+        void Bind()
+        {
+            glBindTexture((GLenum)target, id);
+        }
+
+        /**
+         * Unbind the Texture.
+         **/
+        void Unbind()
+        {
+            glBindTexture((GLenum)target, 0);
+        }
+
+        /**
+         * Activate the Texture slot.
+         **/
+        void Activate()
+        {
+            glActiveTexture((GLenum)slot);
+        }
+
+        /**
+         * Deactivate the Texture slot.
          **/
         static void DEACTIVATE()
         {
             glActiveTexture(0);
+        }
+
+        /**
+         * Delete the Texture.
+         **/
+        void Delete()
+        {
+            glDeleteTextures(1, &id);
+        }
+
+        /**
+         * Update the Texture with new data.
+         **/
+        void Update(const void *_data)
+        {
+            Bind();
+            glTexImage2D((GLenum)target, 0, (GLint)internalFormat, width, height, 0, (GLenum)format, (GLenum)type, _data);
+            glGenerateMipmap((GLenum)target);
+        }
+
+        /**
+         * Regenerate mipmaps.
+         **/
+        void Update()
+        {
+            Bind();
+            glGenerateMipmap((GLenum)target);
         }
     };
 
